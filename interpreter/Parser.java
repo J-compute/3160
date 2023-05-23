@@ -15,7 +15,7 @@ public class Parser {
 		
 		identifier(tokens);
 		assignment(tokens);
-		int nexp(tokens);
+		exp(tokens);
 	
 		return true;
 	}
@@ -173,7 +173,7 @@ public class Parser {
 
             
     static void error(){
-        throw new RuntimeException("syntax error");
+        throw new RuntimeException("Error: Incorrect syntax detected.");
     }
     
     /*public static void main(String[] args) {
