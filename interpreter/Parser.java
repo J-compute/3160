@@ -176,18 +176,6 @@ public class Parser {
         throw new RuntimeException("Error: Incorrect syntax detected.");
     }
     
-    /*public static void main(String[] args) {
-        str = "(2+3)*4";
-        curIndex = 0;
-        exp(tokens);
-        
-        if (currentToken(null).lexeme != ";"){
-            error();
-        } else {
-            System.out.println("valid");
-        }
-    } */
-    
     static Token lookAhead(ArrayList<Token> tokens) {
     	if (curIndex < tokens.size() - 1) {
     		return tokens.get(curIndex + 1);
