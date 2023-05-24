@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Parser {
 	//static ArrayList<Token> tokenList = new ArrayList<Token>();
-	static Map<Token, Integer> varMap = new HashMap<Token, Integer>();
+	
 	static String str;
 	static int curIndex = 0;
 	static Token temp;
@@ -19,7 +19,7 @@ public class Parser {
 		assignment(tokens);
 		int res = exp(tokens);
 		System.out.println(res);
-		varMap.put(tkn, res);
+
 		return true;
 	}
 	
@@ -155,11 +155,8 @@ public class Parser {
         	//}
         	// convert into evaluation function that takes lhs, op, rhs
         	//return evaluate('-', tempNum, factor(tokens));
-        case "IDENTIFIER":
-        	if (varMap.containsKey(curToken)) {
-        		readNextToken();
-        		return varMap.get(curToken);
-        	}
+
+        	
         	
         default:
             if (isNumber(curToken.lexeme)){
