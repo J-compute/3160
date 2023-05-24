@@ -9,12 +9,18 @@ public class Interpreter {
 	public static void main(String args[]) {
 		Scanner sc = new Scanner(System.in);
 		String[] strings = getInput(sc);
-		getTokens(strings);
+		if (strings != null) {
+			getTokens(strings);
+		}
 		
 	}
 	
 	public static String[] getInput(Scanner sc) {
+		System.out.println("Type \"exit\" to leave");
 		String input = sc.nextLine();
+		if (input.compareTo("exit") == 0) {
+			return null;
+		}
 		String[] strings = input.split("\t");
 		return strings;
 		
@@ -27,6 +33,7 @@ public class Interpreter {
 		for (String str : strings) {
 			// checking if spaces are present
 			String[] substrs = str.split(" ");
+			
 			// check for assignment operator
 			if (substrs.length < 2) {
 				throw new RuntimeException("Error: String is too short to fit the format of \"Identifier = Expression\"");

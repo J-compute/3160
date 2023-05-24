@@ -31,15 +31,18 @@ public class Tokenizer {
 				}
 				if (ch >= '1' || ch <= '9') {
 					checkForLiteral(str);
-					tokens.add(new Token(id.INTLITERAL, str.substring(i, curIndex + 1)));
-					
+					if (Character.isDigit(str.charAt(curIndex))) {
+						tokens.add(new Token(id.INTLITERAL, str.substring(i, curIndex + 1)));
+					} else {
+						tokens.add(new Token(id.INTLITERAL, str.substring(i, curIndex)));
+					}
 				}
 			}
 			if ((str.charAt(curIndex) >= 'a' && str.charAt(curIndex) <= 'z') ||
 				(str.charAt(curIndex) >= 'A' && str.charAt(curIndex) <= 'Z') ||
 				 str.charAt(curIndex) == '_') {
 				checkForIdentifier(str);
-				tokens.add(new Token(id.IDENTIFIER, str.substring(i, curIndex)));
+				tokens.add(new Token(id.IDENTIFIER, str.substring(i, curIndex + 1)));
 				
 			}
 			if (ch == '(') {
@@ -98,10 +101,12 @@ public class Tokenizer {
 				tokens.add(new Token(id.EQUALS, "="));
 			}
 			if (ch == ';') {
-				nextToken();
 				tokens.add(new Token(id.SEMICOLON, ";"));
 			}
 		}
+		/*if (tokens.get(tokens.size() - 1).getType().toString() != "SEMICOLON") {
+			throw new RuntimeException("No semicolon detected at end of string.");
+		}*/
 		return tokens;
 	}
 
@@ -109,9 +114,11 @@ public class Tokenizer {
 	public static void checkForLiteral(String str) {
 		if (Character.isDigit(str.charAt(curIndex))) {
 
-			if ((curIndex < str.length() - 1) && Character.isDigit(str.charAt(curIndex + 1))) {
+			if ((curIndex < str.length() - 1)) {
+				if (Character.isDigit(str.charAt(curIndex))) {
 				nextToken();
 				checkForLiteral(str);
+				}
 			}
 		}
 		
@@ -133,7 +140,7 @@ public class Tokenizer {
 				}
 			}
 		} else {
-			if (Character.isAlphabetic(str.charAt(curIndex)) || str.charAt(curIndex) == '_') {
+			if (Character.isLetterOrDigit(str.charAt(curIndex)) || str.charAt(curIndex) == '_') {
 				if (curIndex <= str.length() - 2) {
 					nextToken();
 					checkForIdentifier(str);
